@@ -1,0 +1,49 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    /* 🔐 Seguridad TS */
+    "strict": true,
+    "allowJs": false,
+    "noEmit": true,
+
+    /* 🔥 Imports absolutos "@/" y "app/*" */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "app/*": ["app/*"]
+    },
+
+    /* 🧹 Silencia deprecaciones de TS 6 mientras migramos baseUrl */
+    "ignoreDeprecations": "6.0",
+
+    /* ⚙️ Mejor Developer Experience */
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+
+    /* ⚛️ React 19 (React Compiler + Expo) */
+    "jsx": "react-jsx",
+
+    /* 🧠 Metro bundler + Expo */
+    "moduleResolution": "bundler",
+
+    /* ⭐ IMPORTANTE — Para permitir .d.ts personalizados como crypto-js */
+    "typeRoots": ["./types", "./node_modules/@types"],
+
+    /* ⚡ Para que no se queje TS si faltan algunos tipos externos */
+    "skipLibCheck": true
+  },
+
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+
+    /* Expo Router */
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "app",
+
+    /* 👈 Muy importante: donde tienes crypto-js.d.ts */
+    "types"
+  ]
+}

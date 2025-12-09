@@ -1,0 +1,58 @@
+diff --git a/node_modules/react-native-compressor-with-h265/src/Video/index.tsx b/node_modules/react-native-compressor-with-h265/src/Video/index.tsx
+index 6e7372c..bf77567 100644
+--- a/node_modules/react-native-compressor-with-h265/src/Video/index.tsx
++++ b/node_modules/react-native-compressor-with-h265/src/Video/index.tsx
+@@
+-const VideoCompressEventEmitter = new NativeEventEmitter(
+-  NativeModules.VideoCompressor
+-);
+-
+-const NativeVideoCompressor = NativeModules.VideoCompressor;
++const NativeVideoCompressor: any = NativeModules.VideoCompressor || {};
++// Some platforms ship a stub without event methods; guard to avoid NativeEventEmitter warnings.
++if (!NativeVideoCompressor.addListener) {
++  NativeVideoCompressor.addListener = () => ({ remove: () => {} });
++}
++if (!NativeVideoCompressor.removeListeners) {
++  NativeVideoCompressor.removeListeners = () => {};
++}
++
++const VideoCompressEventEmitter = new NativeEventEmitter(NativeVideoCompressor);
+diff --git a/node_modules/react-native-compressor-with-h265/lib/module/Video/index.js b/node_modules/react-native-compressor-with-h265/lib/module/Video/index.js
+index 3c54d85..1ef3a57 100644
+--- a/node_modules/react-native-compressor-with-h265/lib/module/Video/index.js
++++ b/node_modules/react-native-compressor-with-h265/lib/module/Video/index.js
+@@
+-const VideoCompressEventEmitter = new NativeEventEmitter(NativeModules.VideoCompressor);
+-const NativeVideoCompressor = NativeModules.VideoCompressor;
++const NativeVideoCompressor = NativeModules.VideoCompressor || {};
++// Some platforms ship a stub without event methods; guard to avoid NativeEventEmitter warnings.
++if (!NativeVideoCompressor.addListener) {
++  NativeVideoCompressor.addListener = () => ({ remove: () => { } });
++}
++if (!NativeVideoCompressor.removeListeners) {
++  NativeVideoCompressor.removeListeners = () => { };
++}
++const VideoCompressEventEmitter = new NativeEventEmitter(NativeVideoCompressor);
+diff --git a/node_modules/react-native-compressor-with-h265/lib/commonjs/Video/index.js b/node_modules/react-native-compressor-with-h265/lib/commonjs/Video/index.js
+index 22c8c1e..535279b 100644
+--- a/node_modules/react-native-compressor-with-h265/lib/commonjs/Video/index.js
++++ b/node_modules/react-native-compressor-with-h265/lib/commonjs/Video/index.js
+@@
+-var _utils = require("../utils");
+-
+-const VideoCompressEventEmitter = new _reactNative.NativeEventEmitter(_reactNative.NativeModules.VideoCompressor);
+-const NativeVideoCompressor = _reactNative.NativeModules.VideoCompressor;
++var _utils = require("../utils");
++
++const NativeVideoCompressor = _reactNative.NativeModules.VideoCompressor || {};
++// Some platforms ship a stub without event methods; guard to avoid NativeEventEmitter warnings.
++if (!NativeVideoCompressor.addListener) {
++  NativeVideoCompressor.addListener = () => ({
++    remove() {}
++  });
++}
++if (!NativeVideoCompressor.removeListeners) {
++  NativeVideoCompressor.removeListeners = () => {};
++}
++const VideoCompressEventEmitter = new _reactNative.NativeEventEmitter(NativeVideoCompressor);
